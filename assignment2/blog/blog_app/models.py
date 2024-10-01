@@ -26,7 +26,7 @@ class Post(models.Model):
     class Meta:
         indexes = [
             models.Index(fields=['author']),
-            models.Index(fields=['tags']),
+            models.Index(fields=['created_date']),
         ]
     def __str__(self):
         return self.title
@@ -35,7 +35,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
-    created_date = models.DateTimeField()
+    created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         indexes = [

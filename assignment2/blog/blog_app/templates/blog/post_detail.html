@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Detail</title>
+</head>
+<body>
+{% load cache %}
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+
+    <!-- Cache the recent comments section for 60 seconds -->
+    {% cache 60 recent_comments post.id %}
+        <h2>Recent Comments</h2>
+        {% for comment in comments %}
+            <p>{{ comment.content }} by {{ comment.author.username }} on {{ comment.created_at }}</p>
+        {% endfor %}
+    {% endcache %}
+
+    <h3>Add a new comment</h3>
+    <form method="POST">
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
+
+</body>
+</html>
