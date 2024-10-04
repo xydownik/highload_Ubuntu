@@ -3,57 +3,14 @@ from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import HttpResponseForbidden
 from django.views.decorators.cache import cache_page
-from rest_framework.decorators import api_view
 from rest_framework.generics import get_object_or_404
-from rest_framework.response import Response
 
-from .models import Post, Comment, User
+from .models import Post, Comment
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm, CommentForm, PostForm
-from django.contrib.auth import logout as auth_logout
-
-from .serializers import PostSerializer
+from .forms import CommentForm, PostForm
 
 
 # Create your views here.
-@api_view(['GET', 'POST'])
-def post_list(request):
-
-    if request.method == 'GET':
-        posts = Post.objects.all().order_by('-created_at')
-
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
-
-
-    elif request.method == 'POST':
-        serializer = PostSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def post_detail(request, id):
-    post = get_object_or_404(Post, id=id)
-
-    if request.method == 'GET':
-        serializer = PostSerializer(post)
-
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = PostSerializer(post, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
-
-    elif request.method == 'DELETE':
-        post.delete()
-        return Response({'message': 'City deleted successfully'}, status=204)
 
 @cache_page(60)
 def post_list_view(request):
@@ -76,7 +33,7 @@ def get_comment_count(post_id):
 def post_detail_view(request, id):
     post = get_object_or_404(Post, id=id)
     comments = post.comments.all().order_by('-created_date')
-    comment_count = get_comment_count(post.id)  # Use cached comment count
+    comment_count = get_comment_count(post.id)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():

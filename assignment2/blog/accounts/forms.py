@@ -1,5 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
-from blog.blog_app.models import User
+
+from blog_app.models import User
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
