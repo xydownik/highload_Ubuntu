@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 
-from blog.blog_app.models import Post, Comment, User
+from .models import Post, Comment, User
 
 
 class BlogSerializer(serializers.ModelSerializer):

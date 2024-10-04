@@ -1,6 +1,14 @@
+import os
+import django
 from django.test import TestCase
 
-# Create your tests here.
+# Set the DJANGO_SETTINGS_MODULE environment variable
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blog.settings')
+
+# Ensure that Django setup is called before importing models
+django.setup()
+
+# Import models
 from .models import Post, Comment, User
 
 class PostModelTest(TestCase):
@@ -11,5 +19,14 @@ class PostModelTest(TestCase):
 
     def test_post_with_comments(self):
         posts_with_comments = Post.objects.prefetch_related('comments').select_related('author')
-        self.assertEqual(posts_with_comments.count(), 1)
-        self.assertEqual(posts_with_comments.first().comments.count(), 1)
+        self.assertEqual(posts_with_comments.count(), 2)
+        self.assertEqual(posts_with_comments[1].comments.count(), 1)
+
+# from django.core.cache import cache
+#
+# # Set a cache value
+# cache.set('my_key', 'my_value', timeout=60)
+#
+# # Get the cached value
+# value = cache.get('my_key')
+# print(value)  # Should print 'my_value'

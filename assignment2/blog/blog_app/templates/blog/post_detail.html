@@ -12,18 +12,27 @@
 
     <!-- Cache the recent comments section for 60 seconds -->
     {% cache 60 recent_comments post.id %}
-        <h2>Recent Comments</h2>
+        <h2>Recent Comments {{comment_count}}</h2>
         {% for comment in comments %}
-            <p>{{ comment.content }} by {{ comment.author.username }} on {{ comment.created_at }}</p>
+            <p>{{ comment.content }} by {{ comment.author.username }} on {{ comment.created_date }}</p>
         {% endfor %}
     {% endcache %}
 
-    <h3>Add a new comment</h3>
-    <form method="POST">
+
+{% endblock %}
+
+{% if user.is_authenticated %}
+    <h3>Leave a Comment</h3>
+    <form method="post">
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
-{% endblock %}
-
+    {% else %}
+    <p>You must be logged in to leave a comment.</p>
+    {% endif %}
+    <a href="{% url 'edit_post' post.id%}">Edit</a></br>
+    <a href="{% url 'delete_post' post.id %}">Delete</a></br>
+    <a href="{% url 'post_list' %}">Back</a>
 </body>
 </html>
