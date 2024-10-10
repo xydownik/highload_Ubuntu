@@ -10,7 +10,6 @@
     <h1>{{ post.title }}</h1>
     <p>{{ post.content }}</p>
 
-    <!-- Cache the recent comments section for 60 seconds -->
     {% cache 60 recent_comments post.id %}
         <h2>Recent Comments {{comment_count}}</h2>
         {% for comment in comments %}

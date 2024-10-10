@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from django.views.decorators.cache import cache_page
 from rest_framework.generics import get_object_or_404
 
@@ -14,7 +14,7 @@ from .forms import CommentForm, PostForm
 
 @cache_page(60)
 def post_list_view(request):
-    posts = Post.objects.all().order_by('-created_date')
+    posts =   Post.objects.prefetch_related('comments').all().order_by('-created_date')
     paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -31,9 +31,10 @@ def get_comment_count(post_id):
 
 
 def post_detail_view(request, id):
-    post = get_object_or_404(Post, id=id)
+    post = get_object_or_404(Post.objects.prefetch_related('comments'), id=id)
     comments = post.comments.all().order_by('-created_date')
     comment_count = get_comment_count(post.id)
+    # comment_count = post.comments.count()
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -96,3 +97,7 @@ def delete_post(request, id):
         return redirect('post_list')
 
     return render(request, 'blog/delete_post.html', {'post': post})
+
+
+def health_check(request):
+    return JsonResponse({'status': 'ok'})

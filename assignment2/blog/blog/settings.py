@@ -9,14 +9,27 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'blog_app/static/css/style.css'),
+    os.path.join(BASE_DIR, 'staticfiles/css/style.css'),
+    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/css/toolbar.css'),
+    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/css/print.css'),
+    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/toolbar.js'),
+    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/history.js'),
+    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/redirect.js'),
+    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/timer.js'),
+    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/utils.js'),
+    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/toolbar.js')
 
+]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -41,7 +54,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'blog_app',
     'accounts',
-    'blog'
+    'blog',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
@@ -52,8 +66,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'blog.middleware.RoundRobinMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+if DEBUG:
+    INTERNAL_IPS = ['127.0.0.1']
 
+    def show_toolbar(request):
+        return True
+
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+    }
 ROOT_URLCONF = 'blog.urls'
 
 TEMPLATES = [
@@ -121,7 +145,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
