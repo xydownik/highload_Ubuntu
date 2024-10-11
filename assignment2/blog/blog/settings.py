@@ -18,17 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'blog_app/static/css/style.css'),
-    os.path.join(BASE_DIR, 'staticfiles/css/style.css'),
-    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/css/toolbar.css'),
-    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/css/print.css'),
-    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/toolbar.js'),
-    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/history.js'),
-    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/redirect.js'),
-    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/timer.js'),
-    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/utils.js'),
-    os.path.join(BASE_DIR, 'staticfiles/debug_toolbar/js/toolbar.js')
-
+    os.path.join(BASE_DIR, 'staticfiles'),
 ]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
