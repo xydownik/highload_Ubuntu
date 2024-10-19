@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -10,47 +10,59 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = '__all__'
 
+User = get_user_model()
+
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        fields = ['id', 'username']
+        fields = ['id', 'username', 'phone_number', 'password']
+
+    def create(self, validated_data):
+        # Create a new user and hash the password
+        user = User(
+            username=validated_data['username'],
+            phone_number=validated_data['phone_number']
+        )
+        user.set_password(validated_data['password'])  # Hash the password
+        user.save()
+        return user
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    product = serializers.SlugRelatedField(slug_field='name', queryset=Product.objects.all())
+    user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
+
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'product', 'quantity', 'price', 'user']
+
+    def create(self, validated_data):
+        return OrderItem.objects.create(**validated_data)
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
-    user = UserSerializer(read_only=True)  # Prevent modification of the user field
+    orderItems = OrderItemSerializer(many=True)
+    user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
 
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['id', 'orderItems', 'total', 'user']
+
+    def create(self, validated_data):
+        order_items_data = validated_data.pop('orderItems')
+        order = Order.objects.create(**validated_data)
+
+        for item_data in order_items_data:
+            order_item = OrderItem.objects.create(**item_data)
+            order.orderItems.add(order_item)
+
+        return order
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
 
-class RegisterSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
-        required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True, required=True)
 
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password', 'password2')
-
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
-        return attrs
-
-    def create(self, validated_data):
-        user = User.objects.create(
-            username=validated_data['username'],
-            email=validated_data['email']
-        )
-        user.set_password(validated_data['password'])  # Hash the password before saving it
-        user.save()
-        return user
