@@ -36,7 +36,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'product', 'quantity', 'price', 'user']
+        fields = ['id', 'product', 'quantity', 'user']
 
     def create(self, validated_data):
         return OrderItem.objects.create(**validated_data)
