@@ -1,0 +1,14 @@
+input {
+    file {
+        path => "/home/sazanova/highload/assignment3/allMart/debug.log/"
+        start_position => "beginning"
+	sincedb_path => "/dev/null"
+    }
+}
+
+output {
+    elasticsearch {
+        hosts => ["localhost:9200"]
+        index => "my_index_kv"
+    }
+}
