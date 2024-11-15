@@ -4,7 +4,9 @@ from django.core.mail import send_mail
 
 from .models import Email
 
-
+@shared_task
+def hello():
+    return 'Hello World!'
 @shared_task
 def add(x, y):
     return x + y
@@ -16,7 +18,7 @@ def send_email_task(self, email_id):
         send_mail(
             email_obj.subject,
             email_obj.body,
-            'from@example.com',  # replace with a valid sender email
+            'from@example.com',
             [email_obj.recipient],
             fail_silently=False,
         )
