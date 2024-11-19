@@ -3,6 +3,9 @@ from django.db import models
 from django.db import models
 from django.core.validators import URLValidator, MinValueValidator, MaxValueValidator
 from django.utils.html import escape
+from encrypted_model_fields.fields import EncryptedEmailField, EncryptedCharField
+
+
 # Create your models here.
 
 class Email(models.Model):
@@ -25,9 +28,11 @@ class UserProfile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     age = models.PositiveIntegerField( default=0)
-    email = models.EmailField()
+    email = EncryptedEmailField()
     telegram_account = models.URLField(validators=[URLValidator()], default=0)
     description = models.TextField(default='', verbose_name='description')
+    UIN = EncryptedCharField(max_length=12, default= 'No UIN')
+
 
     def save(self, *args, **kwargs):
         self.description = escape(self.description)

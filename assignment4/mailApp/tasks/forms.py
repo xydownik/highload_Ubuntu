@@ -40,7 +40,7 @@ class RegistrationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['name', 'age', 'email', 'telegram_account', 'description']
+        fields = ['name', 'age', 'email', 'telegram_account', 'description', 'UIN']
 
     def clean_description(self):
         description = self.cleaned_data.get('description', '')

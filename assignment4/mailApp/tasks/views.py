@@ -1,11 +1,19 @@
+import os
+
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from django.contrib.auth import logout
 from django.contrib.auth.forms import UserCreationForm
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 # Create your views here.
 from django.shortcuts import render, redirect
-from rest_framework import status
-from rest_framework.decorators import api_view, throttle_classes
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status, permissions
+from rest_framework.decorators import api_view, throttle_classes, permission_classes
 from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -13,25 +21,30 @@ from .forms import EmailForm, UserProfileForm, RegistrationForm, CustomUserCreat
 from .models import Email, UserProfile
 from .serializers import EmailSerializer
 from .tasks import send_email_task, add, hello
-from mailApp import throttles
+from mailApp.throttles import RoleBasedThrottle
+
+from mailApp import settings
 
 
 def send_email_view(request):
     if request.method == 'POST':
         form = EmailForm(request.POST)
         if form.is_valid():
-            email = form.save(commit=False)  # Don't save to DB yet
-            email.sender = request.user.email  # Set sender to current user's email
-            email.save()  # Save to DB
-            send_email_task.delay(email.id)  # Queue task
+            email = form.save(commit=False)
+            email.sender = request.user.email
+            email.sent = True
+            email.save()
+            send_email_task.delay(email.id)
             return HttpResponse("Email is being sent in the background.")
     else:
         form = EmailForm()
     return render(request, 'tasks/send_email.html', {'form': form})
 
 @api_view(['GET', 'POST'])
-@throttle_classes([throttles.RoleBasedThrottle])
+@permission_classes([IsAdminUser])
+@throttle_classes([RoleBasedThrottle])
 def email_list(request):
+
     if request.method == 'GET':
         emails = Email.objects.all()
         serializer = EmailSerializer(emails, many=True)
@@ -46,6 +59,7 @@ def email_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def email_detail(request, pk):
+
     city = get_object_or_404(Email, pk=pk)
 
     if request.method == 'GET':
@@ -65,6 +79,7 @@ def email_detail(request, pk):
 
 
 def register(request):
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -77,7 +92,7 @@ def register(request):
 
 
 class ProfileView(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user_profile = request.user.userprofile
@@ -86,7 +101,8 @@ class ProfileView(APIView):
             'email': user_profile.email,
             'description': user_profile.description,
             'age': user_profile.age,
-            'telegram_account': user_profile.telegram_account
+            'telegram_account': user_profile.telegram_account,
+            'UIN': user_profile.UIN
         })
 
     def put(self, request):
@@ -101,7 +117,6 @@ class ProfileView(APIView):
         # Save the profile changes
         user_profile.save()
 
-        # Update username or email if provided
         request.user.username = data.get('name', request.user.username)
         request.user.email = data.get('email', request.user.email)
         request.user.save()
@@ -114,14 +129,52 @@ class ProfileView(APIView):
             'age': user_profile.age,
             'telegram_account': user_profile.telegram_account
         }, status=status.HTTP_200_OK)
-# def create_user_profile(request):
-#     if request.method == "POST":
-#         form = UserProfileForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('success_page')
-#     else:
-#         form = UserProfileForm()
-#
-#     return render(request, 'user_profile_form.html', {'form': form})
+
+class UserEmailsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        emails = Email.objects.filter(recipient=request.user.email)
+        serializer = EmailSerializer(emails, many=True)
+        return Response(serializer.data)
+
+
+def logout_view(request):
+    # permission_classes = [IsAuthenticated]
+    logout(request)
+    return redirect('login')
+
+@csrf_exempt
+def upload_file(request):
+    if request.method == "POST" and "file" in request.FILES:
+        file = request.FILES["file"]
+        total_size = file.size
+        uploaded_size = 0
+
+        # Define a location to save the uploaded file
+        upload_dir = os.path.join(settings.MEDIA_ROOT, "uploads")
+        os.makedirs(upload_dir, exist_ok=True)  # Ensure the directory exists
+        file_path = os.path.join(upload_dir, file.name)
+
+        # Save the file in chunks while tracking progress
+        try:
+            with open(file_path, "wb") as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+                    uploaded_size += len(chunk)
+
+                    # Calculate and send progress
+                    progress = int((uploaded_size / total_size) * 100)
+                    channel_layer = get_channel_layer()
+                    async_to_sync(channel_layer.group_send)(
+                        f"user_{request.user.id}_progress",
+                        {"type": "send_progress", "progress": progress},
+                    )
+        except Exception as e:
+            return JsonResponse({"error": f"File upload failed: {str(e)}"}, status=500)
+
+        # Return success response after completing the upload
+        return JsonResponse({"message": "Upload complete", "file_path": file_path})
+
+    return JsonResponse({"error": "Invalid request. Please send a file via POST."}, status=400)
 

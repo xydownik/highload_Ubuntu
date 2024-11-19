@@ -41,6 +41,11 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'two_factor',
+    'health_check',
+    'health_check.db',
+    'health_check.cache',
+    'debug_toolbar',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -51,8 +56,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware'
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
+
+if DEBUG:
+    INTERNAL_IPS = ['127.0.0.1']
+
+    def show_toolbar(request):
+        return True
+
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+    }
 
 ROOT_URLCONF = 'mailApp.urls'
 
@@ -139,19 +155,23 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'admin': '1000/day',
         'user': '100/day',
-        'anon': '10/hour',
+        'anon': '10/day',
     },
 }
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_RESULT_BACKEND = 'rpc://'
+
+FIELD_ENCRYPTION_KEY = os.getenv('FIELD_ENCRYPTION_KEY', '1dCCmpAaFbOFRwietLosw1lr8TgBlKV-zkjQTsg_eMM=')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 TWO_FACTOR_CALL_GATEWAY = 'two_factor.gateways.fake.Fake'
 TWO_FACTOR_SMS_GATEWAY = 'two_factor.gateways.twilio.gateway.Twilio'
 
-LOGIN_REDIRECT_URL = '/tasks/emails/'
+LOGIN_REDIRECT_URL = '/tasks/profile/'
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -161,3 +181,32 @@ PASSWORD_HASHERS = [
 ]
 
 AUTH_USER_MODEL = 'tasks.MyUser'
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'suspicious.log',
+        },
+    },
+    'loggers': {
+        'django.security': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}
+
+ASGI_APPLICATION = "mailApp.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}

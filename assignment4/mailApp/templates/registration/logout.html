@@ -5,7 +5,9 @@
     <title>Title</title>
 </head>
 <body>
- <h2>You have successfully logged out.</h2>
-    <a href="{% url 'login' %}">Login again</a>
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
 </body>
 </html>
