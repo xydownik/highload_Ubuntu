@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
-    <title>Progress Tracker</title>
-    {% load static %}
-    <script src="{% static 'js/upload.js' %}"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-    <div>
-        <div id="progress-bar" style="width: 0; height: 20px; background: green;"></div>
-        <p id="progress-text">0%</p>
-    </div>
+<h2>Upload File</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+<script>
+    function checkProgress(fileId) {
+        fetch(`/progress/${fileId}/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('progress').innerText = `Progress: ${data.progress}%`;
+                if (data.processed) {
+                    alert('File processing complete!');
+                } else {
+                    setTimeout(() => checkProgress(fileId), 2000);  // Poll every 2 seconds
+                }
+            });
+    }
+</script>
 </body>
 </html>

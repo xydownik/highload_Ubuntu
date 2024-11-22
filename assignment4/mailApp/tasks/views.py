@@ -3,6 +3,7 @@ import os
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
 from django.http import HttpResponse, JsonResponse
@@ -17,10 +18,10 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .forms import EmailForm, UserProfileForm, RegistrationForm, CustomUserCreationForm
-from .models import Email, UserProfile
+from .forms import EmailForm, UserProfileForm, RegistrationForm, CustomUserCreationForm, FileUploadForm
+from .models import Email, UserProfile, UploadedFile
 from .serializers import EmailSerializer
-from .tasks import send_email_task, add, hello
+from .tasks import send_email_task, add, hello, process_file
 from mailApp.throttles import RoleBasedThrottle
 
 from mailApp import settings
@@ -143,38 +144,28 @@ def logout_view(request):
     # permission_classes = [IsAuthenticated]
     logout(request)
     return redirect('login')
+@login_required
+@permission_classes([IsAuthenticated])
+def upload_file_view(request):
+    if request.method == 'POST':
+        form = FileUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            uploaded_file = form.save(commit=False)
+            uploaded_file.user = request.user
+            uploaded_file.save()
+            # Queue the processing task
+            process_file.delay(uploaded_file.id)
+            return redirect('upload_success')
+    else:
+        form = FileUploadForm()
+    return render(request, 'tasks/upload.html', {'form': form})
 
-@csrf_exempt
-def upload_file(request):
-    if request.method == "POST" and "file" in request.FILES:
-        file = request.FILES["file"]
-        total_size = file.size
-        uploaded_size = 0
+def upload_success_view(request):
+    return render(request, 'tasks/upload_success.html')
 
-        # Define a location to save the uploaded file
-        upload_dir = os.path.join(settings.MEDIA_ROOT, "uploads")
-        os.makedirs(upload_dir, exist_ok=True)  # Ensure the directory exists
-        file_path = os.path.join(upload_dir, file.name)
-
-        # Save the file in chunks while tracking progress
-        try:
-            with open(file_path, "wb") as destination:
-                for chunk in file.chunks():
-                    destination.write(chunk)
-                    uploaded_size += len(chunk)
-
-                    # Calculate and send progress
-                    progress = int((uploaded_size / total_size) * 100)
-                    channel_layer = get_channel_layer()
-                    async_to_sync(channel_layer.group_send)(
-                        f"user_{request.user.id}_progress",
-                        {"type": "send_progress", "progress": progress},
-                    )
-        except Exception as e:
-            return JsonResponse({"error": f"File upload failed: {str(e)}"}, status=500)
-
-        # Return success response after completing the upload
-        return JsonResponse({"message": "Upload complete", "file_path": file_path})
-
-    return JsonResponse({"error": "Invalid request. Please send a file via POST."}, status=400)
-
+def file_progress_view(request, file_id):
+    uploaded_file = UploadedFile.objects.get(id=file_id, user=request.user)
+    return JsonResponse({
+        'progress': uploaded_file.progress,
+        'processed': uploaded_file.processed,
+    })

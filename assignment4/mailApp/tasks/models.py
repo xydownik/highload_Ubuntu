@@ -40,3 +40,10 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.name
+
+class UploadedFile(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='uploads/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    processed = models.BooleanField(default=False)
+    progress = models.FloatField(default=0.0)

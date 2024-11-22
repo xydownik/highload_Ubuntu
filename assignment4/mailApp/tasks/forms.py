@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from .models import Email
+from .models import Email, UploadedFile
 from django import forms
 from .models import UserProfile
 from django.utils.html import escape
@@ -53,3 +53,14 @@ class UserProfileForm(forms.ModelForm):
         if not name.isalnum():
             raise forms.ValidationError("Name should contain only letters and numbers.")
         return name
+
+class FileUploadForm(forms.ModelForm):
+    class Meta:
+        model = UploadedFile
+        fields = ['file']
+
+    def clean_file(self):
+        file = self.cleaned_data['file']
+        if not file.name.endswith('.csv'):
+            raise forms.ValidationError("Only CSV files are allowed.")
+        return file
