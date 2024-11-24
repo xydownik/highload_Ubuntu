@@ -1,11 +1,8 @@
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db import models
-from django.core.validators import URLValidator, MinValueValidator, MaxValueValidator
+from django.core.validators import URLValidator
 from django.utils.html import escape
 from encrypted_model_fields.fields import EncryptedEmailField, EncryptedCharField
-
-
 # Create your models here.
 
 class Email(models.Model):
@@ -19,7 +16,7 @@ class Email(models.Model):
         return self.subject
 
 class MyUser(AbstractUser):
-    email = models.EmailField(unique=True)  # Ensure emails are unique
+    email = models.EmailField(unique=True)
 
     def __str__(self):
         return self.username
@@ -28,7 +25,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     age = models.PositiveIntegerField( default=0)
-    email = EncryptedEmailField()
+    email = EncryptedEmailField(unique=True)
     telegram_account = models.URLField(validators=[URLValidator()], default=0)
     description = models.TextField(default='', verbose_name='description')
     UIN = EncryptedCharField(max_length=12, default= 'No UIN')

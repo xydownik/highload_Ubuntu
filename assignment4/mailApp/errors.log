@@ -1,0 +1,194 @@
+ERROR 2024-11-24 07:03:17,209 log Internal Server Error: /tasks/upload/
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 747, in _init_socket
+    self.clamd_socket.connect(self.unix_socket)
+FileNotFoundError: [Errno 2] No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 42, in inner
+    response = await get_response(request)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/current_thread_executor.py", line 40, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 195, in upload_file_view
+    validate_and_save_file(uploaded_file)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 232, in validate_and_save_file
+    scan_file(uploaded_file.file.path)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 218, in scan_file
+    cd = pyclamd.ClamdUnixSocket('/var/run/clamav/clamd.ctl')
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 732, in __init__
+    self._init_socket()
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 749, in _init_socket
+    raise ConnectionError('Could not reach clamd using unix socket ({0})'.format((self.unix_socket)))
+pyclamd.pyclamd.ConnectionError: Could not reach clamd using unix socket (/var/run/clamav/clamd.ctl)
+ERROR 2024-11-24 07:05:29,517 log Internal Server Error: /tasks/upload/
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 42, in inner
+    response = await get_response(request)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/current_thread_executor.py", line 40, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 195, in upload_file_view
+    validate_and_save_file(uploaded_file)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 232, in validate_and_save_file
+    scan_file(uploaded_file.file.path)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 228, in scan_file
+    raise ValidationError("The uploaded file contains malware.")
+django.core.exceptions.ValidationError: ['The uploaded file contains malware.']
+ERROR 2024-11-24 07:07:38,632 log Internal Server Error: /tasks/upload/
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 793, in _init_socket
+    self.clamd_socket.connect((self.host, self.port))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 42, in inner
+    response = await get_response(request)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/current_thread_executor.py", line 40, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 195, in upload_file_view
+    validate_and_save_file(uploaded_file)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 232, in validate_and_save_file
+    scan_file(uploaded_file.file.path)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 218, in scan_file
+    cd = pyclamd.ClamdNetworkSocket(host='127.0.0.1', port=3310)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 779, in __init__
+    self._init_socket()
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 795, in _init_socket
+    raise ConnectionError('Could not reach clamd using network ({0}, {1})'.format(self.host, self.port))
+pyclamd.pyclamd.ConnectionError: Could not reach clamd using network (127.0.0.1, 3310)
+ERROR 2024-11-24 07:16:23,479 log Internal Server Error: /tasks/upload/
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 42, in inner
+    response = await get_response(request)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/current_thread_executor.py", line 40, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 195, in upload_file_view
+    validate_and_save_file(uploaded_file)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 232, in validate_and_save_file
+    scan_file(uploaded_file.file.path)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 228, in scan_file
+    raise ValidationError("The uploaded file contains malware.")
+django.core.exceptions.ValidationError: ['The uploaded file contains malware.']
+ERROR 2024-11-24 07:17:10,504 log Internal Server Error: /tasks/upload/
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 42, in inner
+    response = await get_response(request)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/current_thread_executor.py", line 40, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 195, in upload_file_view
+    validate_and_save_file(uploaded_file)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 232, in validate_and_save_file
+    scan_file(uploaded_file.file.path)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 228, in scan_file
+    raise ValidationError("The uploaded file contains malware.")
+django.core.exceptions.ValidationError: ['The uploaded file contains malware.']
+ERROR 2024-11-24 07:41:28,081 log Internal Server Error: /tasks/upload/
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 793, in _init_socket
+    self.clamd_socket.connect((self.host, self.port))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 42, in inner
+    response = await get_response(request)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/current_thread_executor.py", line 40, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 195, in upload_file_view
+    validate_and_save_file(uploaded_file)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 232, in validate_and_save_file
+    scan_file(uploaded_file.file.path)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 218, in scan_file
+    cd = pyclamd.ClamdNetworkSocket(host='127.0.0.1', port=3310)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 779, in __init__
+    self._init_socket()
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/pyclamd/pyclamd.py", line 795, in _init_socket
+    raise ConnectionError('Could not reach clamd using network ({0}, {1})'.format(self.host, self.port))
+pyclamd.pyclamd.ConnectionError: Could not reach clamd using network (127.0.0.1, 3310)
+ERROR 2024-11-24 07:44:54,688 log Internal Server Error: /tasks/upload/
+Traceback (most recent call last):
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 42, in inner
+    response = await get_response(request)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/current_thread_executor.py", line 40, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/asgiref/sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/sazanova/highload/assignment4/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 195, in upload_file_view
+    validate_and_save_file(uploaded_file)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 232, in validate_and_save_file
+    scan_file(uploaded_file.file.path)
+  File "/home/sazanova/highload/assignment4/mailApp/tasks/views.py", line 228, in scan_file
+    raise ValidationError("The uploaded file contains malware.")
+django.core.exceptions.ValidationError: ['The uploaded file contains malware.']

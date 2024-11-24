@@ -12,17 +12,13 @@ import os
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
+from tasks.routing import websocket_urlpatterns
 
-from tasks.consumers import UploadProgressConsumer
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mailApp.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailApp.settings")
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
     "websocket": AuthMiddlewareStack(
-        URLRouter([
-            # Add WebSocket URL patterns
-            os.path("ws/progress/", UploadProgressConsumer.as_asgi()),
-        ])
+        URLRouter(websocket_urlpatterns)
     ),
 })

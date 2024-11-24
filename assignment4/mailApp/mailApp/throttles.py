@@ -1,6 +1,4 @@
 from rest_framework.throttling import  UserRateThrottle
-from django.core.cache import cache
-from django.contrib.auth.models import User
 
 
 class RoleBasedThrottle(UserRateThrottle):

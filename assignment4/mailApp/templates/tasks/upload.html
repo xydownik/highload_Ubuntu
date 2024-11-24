@@ -2,28 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload with Progress</title>
+    <style>
+        #progress {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+        }
+
+        #progress-bar-filled {
+            height: 100%;
+            width: 0%;
+            background-color: #4caf50;
+            transition: width 0.2s;
+        }
+
+        #progress-text {
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
-<h2>Upload File</h2>
-<form method="post" enctype="multipart/form-data">
+<h1>Upload File</h1>
+<form id="uploadForm" enctype="multipart/form-data" method="POST" action="{% url 'upload_file_view' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form }}
     <button type="submit">Upload</button>
 </form>
+
+<div id="progress" hidden>
+    <div id="progress-bar">
+        <div id="progress-bar-filled"></div>
+    </div>
+    <div id="progress-text">0%</div>
+</div>
+
 <script>
-    function checkProgress(fileId) {
-        fetch(`/progress/${fileId}/`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('progress').innerText = `Progress: ${data.progress}%`;
-                if (data.processed) {
-                    alert('File processing complete!');
-                } else {
-                    setTimeout(() => checkProgress(fileId), 2000);  // Poll every 2 seconds
-                }
-            });
-    }
+    const uploadForm = document.getElementById("uploadForm");
+    const fileInput = document.querySelector("input[type='file']");
+    const progressContainer = document.getElementById("progress");
+    const progressBarFilled = document.getElementById("progress-bar-filled");
+    const progressText = document.getElementById("progress-text");
+
+    const validExtensions = ['csv'];
+
+    fileInput.addEventListener("change", function () {
+        const file = fileInput.files[0];
+        if (file) {
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (!validExtensions.includes(fileExtension)) {
+                alert("Unsupported file format. Please upload a .csv file.");
+                fileInput.value = ""; // Clear the input
+            }
+        }
+    });
+
+    uploadForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const file = fileInput.files[0];
+        if (!file) {
+            alert("Please select a valid file to upload.");
+            return;
+        }
+
+        progressContainer.hidden = false;
+
+        const formData = new FormData(uploadForm);
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", uploadForm.action, true);
+
+        xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+                const percentComplete = Math.round((event.loaded / event.total) * 100);
+                progressBarFilled.style.width = percentComplete + "%";
+                progressText.textContent = "Uploading: " + percentComplete + "%";
+            }
+        };
+
+        xhr.onload = function () {
+            if (xhr.status === 200 || xhr.status === 201) {
+                const userId = "{{ request.user.id }}";
+                const socket = new WebSocket(`ws://${window.location.host}/ws/progress/${userId}/`);
+
+                socket.onmessage = function (event) {
+                    const data = JSON.parse(event.data);
+                    progressBarFilled.style.width = data.progress + "%";
+                    progressText.textContent = data.message;
+
+                    // if (data.progress === 100) {
+                    //
+                    //     setTimeout(() => {
+                    //         window.location.href = "{% url 'upload_success' %}";
+                    //     }, 1);
+                    // }
+                };
+
+                socket.onclose = function () {
+                    console.log("WebSocket connection closed.");
+                };
+            } else {
+                alert("File upload failed. Please try again.");
+            }
+        };
+
+        xhr.onerror = function () {
+            progressText.textContent = "An error occurred during upload.";
+            progressBarFilled.style.backgroundColor = "#f44336";
+        };
+
+        xhr.send(formData);
+    });
+
 </script>
 </body>
 </html>

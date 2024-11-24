@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'health_check.db',
     'health_check.cache',
     'debug_toolbar',
-    'channels',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +57,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 if DEBUG:
@@ -184,17 +185,46 @@ AUTH_USER_MODEL = 'tasks.MyUser'
 
 LOGGING = {
     'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'file': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
             'filename': 'suspicious.log',
+            'formatter': 'verbose',
+        },
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+            'formatter': 'verbose',
+        },
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'formatter': 'verbose',
         },
     },
     'loggers': {
         'django.security': {
             'handlers': ['file'],
             'level': 'WARNING',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['debug_file', 'error_file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
@@ -204,9 +234,16 @@ ASGI_APPLICATION = "mailApp.asgi.application"
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     },
 }
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # Adjust according to your Redis instance
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
