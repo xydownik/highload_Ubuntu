@@ -1,0 +1,17 @@
+{
+	"ulid": "01JEDCPXY97MAWA3P70RF2REK1",
+	"minTime": 1733246306020,
+	"maxTime": 1733248800000,
+	"stats": {
+		"numSamples": 72828,
+		"numSeries": 350,
+		"numChunks": 590
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01JEDCPXY97MAWA3P70RF2REK1"
+		]
+	},
+	"version": 1
+}
