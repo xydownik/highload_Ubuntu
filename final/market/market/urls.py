@@ -34,4 +34,5 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('', include('django_prometheus.urls')),
     path('market/', include('frontend.urls')),
+    path('payments/', include('payments.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

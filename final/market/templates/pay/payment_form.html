@@ -1,0 +1,7 @@
+<!-- payment_form.html -->
+<h2>Payment for Order #{{ order.id }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Выводим форму -->
+    <button type="submit">Pay</button>
+</form>

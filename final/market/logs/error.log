@@ -1116,3 +1116,133 @@
     "status_code": 500,
     "request": "<WSGIRequest: GET '/market/product/1/'>"
 }
+{
+    "asctime": "2024-12-10 06:03:48,885",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /market/cart/add/1/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/frontend/views.py\", line 36, in add_to_cart\n    quantity = int(request.POST.get('quantity', 1))\nValueError: invalid literal for int() with base 10: ''",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/market/cart/add/1/'>"
+}
+{
+    "asctime": "2024-12-10 06:35:58,496",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /market/cart/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/frontend/views.py\", line 29, in view_cart\n    return render(request, 'front/cart.html', {'cart': cart, 'total': total})\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/shortcuts.py\", line 25, in render\n    content = loader.render_to_string(template_name, context, request, using=using)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/loader.py\", line 62, in render_to_string\n    return template.render(context, request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/backends/django.py\", line 107, in render\n    return self.template.render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 171, in render\n    return self._render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/test/utils.py\", line 114, in instrumented_test_render\n    return self.nodelist.render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 1008, in render\n    return SafeString(\"\".join([node.render_annotated(context) for node in self]))\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 1008, in <listcomp>\n    return SafeString(\"\".join([node.render_annotated(context) for node in self]))\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 969, in render_annotated\n    return self.render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/loader_tags.py\", line 159, in render\n    return compiled_parent._render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/test/utils.py\", line 114, in instrumented_test_render\n    return self.nodelist.render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 1008, in render\n    return SafeString(\"\".join([node.render_annotated(context) for node in self]))\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 1008, in <listcomp>\n    return SafeString(\"\".join([node.render_annotated(context) for node in self]))\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 969, in render_annotated\n    return self.render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/loader_tags.py\", line 65, in render\n    result = block.nodelist.render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 1008, in render\n    return SafeString(\"\".join([node.render_annotated(context) for node in self]))\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 1008, in <listcomp>\n    return SafeString(\"\".join([node.render_annotated(context) for node in self]))\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/base.py\", line 969, in render_annotated\n    return self.render(context)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/defaulttags.py\", line 480, in render\n    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/urls/base.py\", line 88, in reverse\n    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/urls/resolvers.py\", line 831, in _reverse_with_prefix\n    raise NoReverseMatch(msg)\ndjango.urls.exceptions.NoReverseMatch: Reverse for 'order_review' not found. 'order_review' is not a valid view function or pattern name.",
+    "status_code": 500,
+    "request": "<WSGIRequest: GET '/market/cart/'>"
+}
+{
+    "asctime": "2024-12-10 06:36:47,576",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/order/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 31, in view_order\n    return render(request, 'front/order_review.html', {'order': order, 'total_amount': total_amount})\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/shortcuts.py\", line 25, in render\n    content = loader.render_to_string(template_name, context, request, using=using)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/loader.py\", line 61, in render_to_string\n    template = get_template(template_name, using=using)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/loader.py\", line 19, in get_template\n    raise TemplateDoesNotExist(template_name, chain=chain)\ndjango.template.exceptions.TemplateDoesNotExist: front/order_review.html",
+    "status_code": 500,
+    "request": "<WSGIRequest: GET '/payments/order/'>"
+}
+{
+    "asctime": "2024-12-10 06:44:14,547",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/order/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 35, in view_order\n    return render(request, 'front/order_review.html', {'order': order, 'total_amount': total_amount})\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/shortcuts.py\", line 25, in render\n    content = loader.render_to_string(template_name, context, request, using=using)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/loader.py\", line 61, in render_to_string\n    template = get_template(template_name, using=using)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/template/loader.py\", line 19, in get_template\n    raise TemplateDoesNotExist(template_name, chain=chain)\ndjango.template.exceptions.TemplateDoesNotExist: front/order_review.html",
+    "status_code": 500,
+    "request": "<WSGIRequest: GET '/payments/order/'>"
+}
+{
+    "asctime": "2024-12-10 06:45:50,278",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/28/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 47, in pay_order\n    payment = Payment.objects.create(\nNameError: name 'Payment' is not defined",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/28/?csrfmiddlewaretoken=jvdwpJWOkCsIRlnTPG7smGMgwkb0KXM7MswJANZbmmqoDAxyb6KjTuk0QHsHX85p'>"
+}
+{
+    "asctime": "2024-12-10 06:46:18,354",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/28/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 47, in pay_order\n    payment = Payment.objects.create(\nNameError: name 'Payment' is not defined",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/28/?csrfmiddlewaretoken=jvdwpJWOkCsIRlnTPG7smGMgwkb0KXM7MswJANZbmmqoDAxyb6KjTuk0QHsHX85p'>"
+}
+{
+    "asctime": "2024-12-10 06:57:36,928",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /market/cart/add/1/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/frontend/views.py\", line 36, in add_to_cart\n    quantity = int(request.POST.get('quantity', 1))\nValueError: invalid literal for int() with base 10: ''",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/market/cart/add/1/'>"
+}
+{
+    "asctime": "2024-12-10 07:12:10,150",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/29/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 56, in pay_order\n    send_order_confirmation_email.delay(order.id)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/celery/app/task.py\", line 444, in delay\n    return self.apply_async(args, kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/celery/app/task.py\", line 559, in apply_async\n    check_arguments(*(args or ()), **(kwargs or {}))\nTypeError: send_order_confirmation_email() missing 1 required positional argument: 'order_id'",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/29/?csrfmiddlewaretoken=LcYVnZJPuq8BvvvOigrydg2GEEdVU5jNe9h8y3Mcwa6hhKFtEG4pK4AqY1uC7gC5'>"
+}
+{
+    "asctime": "2024-12-10 07:31:00,273",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/29/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 56, in pay_order\n    send_order_confirmation_email.delay(order.id)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/celery/app/task.py\", line 444, in delay\n    return self.apply_async(args, kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/celery/app/task.py\", line 559, in apply_async\n    check_arguments(*(args or ()), **(kwargs or {}))\nTypeError: send_order_confirmation_email() missing 1 required positional argument: 'order_id'",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/29/?csrfmiddlewaretoken=LcYVnZJPuq8BvvvOigrydg2GEEdVU5jNe9h8y3Mcwa6hhKFtEG4pK4AqY1uC7gC5'>"
+}
+{
+    "asctime": "2024-12-10 07:31:03,476",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/29/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 56, in pay_order\n    send_order_confirmation_email.delay(order.id)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/celery/app/task.py\", line 444, in delay\n    return self.apply_async(args, kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/celery/app/task.py\", line 559, in apply_async\n    check_arguments(*(args or ()), **(kwargs or {}))\nTypeError: send_order_confirmation_email() missing 1 required positional argument: 'order_id'",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/29/?csrfmiddlewaretoken=LcYVnZJPuq8BvvvOigrydg2GEEdVU5jNe9h8y3Mcwa6hhKFtEG4pK4AqY1uC7gC5'>"
+}

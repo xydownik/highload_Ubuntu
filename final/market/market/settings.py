@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'frontend',
     'channels',
     'django_celery_results',
-    'django_celery_beat'
+    'django_celery_beat',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -257,3 +258,5 @@ CELERY_TASK_SERIALIZER = 'json'
 # Celery Results Backend (optional)
 CELERY_RESULT_BACKEND = 'django-db'
 ASGI_APPLICATION = 'market.asgi.application'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

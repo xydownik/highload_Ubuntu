@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Details</title>
-</head>
-<body>
-    {% extends 'base.html' %}
-
-{% block title %}Payment Result{% endblock %}
-
-{% block content %}
-<h1>{{ message }}</h1>
-<button onclick="location.href='{% url 'cart' %}'">Return to Order Details</button>
-{% endblock %}
-
-</body>
-</html>
+<h2>Payment for Order #{{ order.id }}</h2>
+<form method="post" action="">
+    {% csrf_token %}
+    <label for="payment_method">Payment Method:</label>
+    <select name="payment_method">
+        <option value="credit_card">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="bank_transfer">Bank Transfer</option>
+    </select>
+    <button type="submit">Pay Now</button>
+</form>

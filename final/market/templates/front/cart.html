@@ -18,4 +18,7 @@
         <p>Your cart is empty.</p>
     {% endif %}
 </div>
+<form action="{% url 'view_order' %}" method="get">
+    <button type="submit">Order</button>
+</form>
 {% endblock %}

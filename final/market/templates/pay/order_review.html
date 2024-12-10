@@ -1,0 +1,7 @@
+<!-- order_review.html -->
+<h2>Order #{{ order.id }} Review</h2>
+<p>Total Amount: ${{ total_amount }}</p>
+<form action="{% url 'pay_order' order.id %}" method="get">
+    {% csrf_token %}
+    <button type="submit">Pay Now</button>
+</form>
