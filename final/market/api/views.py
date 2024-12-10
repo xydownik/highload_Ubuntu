@@ -8,8 +8,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
-
-from .forms import CustomUserCreationForm, PaymentForm
+from payments.forms import  PaymentForm
+from payments.models import Payment
+from .forms import CustomUserCreationForm
 from .serializers import *
 
 CACHE_TIMEOUT = 60 * 5
@@ -86,7 +87,7 @@ class CartItemViewSet(ModelViewSet):
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name='dispatch')
 class PaymentViewSet(ModelViewSet):
-    queryset = Payment.objects.select_related('order_id')
+    queryset = Payment.objects.using('my_keyspace').all()
     serializer_class = PaymentSerializer
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name='dispatch')

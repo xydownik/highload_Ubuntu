@@ -1246,3 +1246,94 @@
     "status_code": 500,
     "request": "<WSGIRequest: POST '/payments/pay/29/?csrfmiddlewaretoken=LcYVnZJPuq8BvvvOigrydg2GEEdVU5jNe9h8y3Mcwa6hhKFtEG4pK4AqY1uC7gC5'>"
 }
+{
+    "asctime": "2024-12-10 17:29:03,057",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/30/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 48, in pay_order\n    payment = Payment.objects.using('cassandra').create(\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/query.py\", line 981, in create\n    return self.model(**kwargs) \\\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/models.py\", line 407, in __init__\n    value = column.to_python(value)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/columns.py\", line 668, in to_python\n    return self.validate(value)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/columns.py\", line 664, in validate\n    raise ValidationError(\"{0} {1} is not a valid uuid\".format(\ncassandra.cqlengine.ValidationError: order_id Pending is not a valid uuid",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/30/?csrfmiddlewaretoken=IIKQGA2jdA31Lx1cxvZAm8OyUGaVnlmi1Sd96bkzDEsUKt8CGBIos3kdNZxL1XxA'>"
+}
+{
+    "asctime": "2024-12-10 17:30:35,901",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/30/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 48, in pay_order\n    payment = Payment.objects.using('cassandra').create(\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/query.py\", line 981, in create\n    return self.model(**kwargs) \\\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/models.py\", line 407, in __init__\n    value = column.to_python(value)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/columns.py\", line 668, in to_python\n    return self.validate(value)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/columns.py\", line 664, in validate\n    raise ValidationError(\"{0} {1} is not a valid uuid\".format(\ncassandra.cqlengine.ValidationError: order_id Pending is not a valid uuid",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/30/?csrfmiddlewaretoken=IIKQGA2jdA31Lx1cxvZAm8OyUGaVnlmi1Sd96bkzDEsUKt8CGBIos3kdNZxL1XxA'>"
+}
+{
+    "asctime": "2024-12-10 17:31:26,883",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /market/cart/add/1/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/frontend/views.py\", line 36, in add_to_cart\n    quantity = int(request.POST.get('quantity', 1))\nValueError: invalid literal for int() with base 10: ''",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/market/cart/add/1/'>"
+}
+{
+    "asctime": "2024-12-10 17:31:56,993",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/31/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 48, in pay_order\n    payment = Payment.objects.using('cassandra').create(\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/query.py\", line 981, in create\n    return self.model(**kwargs) \\\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/models.py\", line 407, in __init__\n    value = column.to_python(value)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/columns.py\", line 668, in to_python\n    return self.validate(value)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/columns.py\", line 664, in validate\n    raise ValidationError(\"{0} {1} is not a valid uuid\".format(\ncassandra.cqlengine.ValidationError: order_id Pending is not a valid uuid",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/31/?csrfmiddlewaretoken=K9SI6zFtEngelcJO6KIslWh8Dpxc4ce03jl1waXJ4rF7k8QefQrgrRNNwIU2IOpi'>"
+}
+{
+    "asctime": "2024-12-10 17:36:53,269",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/31/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 50, in pay_order\n    payment = Payment.objects.using('cassandra').create(\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/query.py\", line 989, in create\n    .save()\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/models.py\", line 739, in save\n    if_exists=self._if_exists).save()\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/query.py\", line 1502, in save\n    self._execute(insert)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/query.py\", line 1376, in _execute\n    results = _execute_statement(self.model, statement, self._consistency, self._timeout, connection=connection)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/query.py\", line 1531, in _execute_statement\n    return conn.execute(s, params, timeout=timeout, connection=connection)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/cassandra/cqlengine/connection.py\", line 353, in execute\n    result = conn.session.execute(query, params, timeout=timeout)\n  File \"cassandra/cluster.py\", line 2618, in cassandra.cluster.Session.execute\n  File \"cassandra/cluster.py\", line 4894, in cassandra.cluster.ResponseFuture.result\ncassandra.InvalidRequest: Error from server: code=2200 [Invalid query] message=\"Keyspace 'cassandra' does not exist\"",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/31/?csrfmiddlewaretoken=K9SI6zFtEngelcJO6KIslWh8Dpxc4ce03jl1waXJ4rF7k8QefQrgrRNNwIU2IOpi'>"
+}
+{
+    "asctime": "2024-12-10 17:49:41,045",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /market/cart/add/2/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/frontend/views.py\", line 36, in add_to_cart\n    quantity = int(request.POST.get('quantity', 1))\nValueError: invalid literal for int() with base 10: ''",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/market/cart/add/2/'>"
+}
+{
+    "asctime": "2024-12-10 19:23:01,089",
+    "name": "django.request",
+    "levelname": "ERROR",
+    "message": "Internal Server Error: /payments/pay/32/",
+    "pathname": "/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/utils/log.py",
+    "lineno": 248,
+    "funcName": "log_response",
+    "user": null,
+    "exc_info": "Traceback (most recent call last):\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/exception.py\", line 55, in inner\n    response = get_response(request)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/core/handlers/base.py\", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/django/contrib/auth/decorators.py\", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File \"/home/sazanova/highload/final/market/payments/views.py\", line 58, in pay_order\n    process_payment.delay(payment.id)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/celery/app/task.py\", line 444, in delay\n    return self.apply_async(args, kwargs)\n  File \"/home/sazanova/highload/final/myvenv/lib/python3.10/site-packages/celery/app/task.py\", line 559, in apply_async\n    check_arguments(*(args or ()), **(kwargs or {}))\nTypeError: process_payment() takes 1 positional argument but 2 were given",
+    "status_code": 500,
+    "request": "<WSGIRequest: POST '/payments/pay/32/?csrfmiddlewaretoken=Qe6NeWwum3uUgn03hP0ABHRwtFGLSeRI9oz6ExOKM7TNfj7tqVJoHCnbmY3BwQ20'>"
+}

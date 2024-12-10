@@ -26,7 +26,7 @@ class CustomUserAdmin(UserAdmin):
 admin.site.register(Product),
 admin.site.register(Order),
 admin.site.register(OrderItem),
-admin.site.register(Payment),
+
 admin.site.register(ShoppingCart),
 admin.site.register(Wishlist),
 admin.site.register(WishlistItem),

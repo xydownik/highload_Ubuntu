@@ -138,22 +138,6 @@ class CartItem(models.Model):
             models.Index(fields=['cart_id', 'product_id']),  # Composite index for fast lookups
         ]
 
-class Payment(models.Model):
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
-    payment_method = models.CharField(max_length=255)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=255)
-    created_at = models.DateTimeField(default=now)
-    updated_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Payment for Order #{self.order_id.id} - {self.status}"
-
-    class Meta:
-        indexes = [
-            models.Index(fields=['order_id']),  # Indexing order_id for faster lookups
-            models.Index(fields=['status']),  # Indexing payment status for filtering
-        ]
 
 class Review(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
