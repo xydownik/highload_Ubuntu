@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Payment</title>
+    <style>
+        #spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Process Payment</h1>
+    <form method="post" action="{% url 'process_payment' order.id %}">
+        {% csrf_token %}
+        <label for="amount">Enter Amount:</label>
+        <input type="number" id="amount" name="amount" step="0.01" required>
+        <button type="submit" onclick="showSpinner()">Continue</button>
+    </form>
+    <div id="spinner"></div>
+
+    <script>
+        function showSpinner() {
+            document.getElementById('spinner').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

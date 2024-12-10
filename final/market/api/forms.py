@@ -17,3 +17,7 @@ class CustomUserCreationForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise ValidationError("This email address is already registered.")
         return email
+
+class PaymentForm(forms.Form):
+    payment_method = forms.ChoiceField(choices=[('Credit Card', 'Credit Card'), ('PayPal', 'PayPal')])
+    amount_paid = forms.DecimalField(max_digits=10, decimal_places=2)

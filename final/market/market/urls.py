@@ -33,4 +33,5 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('__debug__/', include('debug_toolbar.urls')),
     path('', include('django_prometheus.urls')),
+    path('market/', include('frontend.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

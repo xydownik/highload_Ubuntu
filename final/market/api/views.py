@@ -1,8 +1,7 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -10,7 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, PaymentForm
 from .serializers import *
 
 CACHE_TIMEOUT = 60 * 5

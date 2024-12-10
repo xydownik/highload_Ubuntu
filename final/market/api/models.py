@@ -126,7 +126,7 @@ class ShoppingCart(models.Model):
 class CartItem(models.Model):
     cart_id = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
     created_at = models.DateTimeField(default=now)
     updated_at = models.DateTimeField(auto_now_add=True)
 
@@ -147,7 +147,7 @@ class Payment(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.status
+        return f"Payment for Order #{self.order_id.id} - {self.status}"
 
     class Meta:
         indexes = [

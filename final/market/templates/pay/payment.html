@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+{% block title %}Payment Result{% endblock %}
+
+{% block content %}
+<h1>{{ message }}</h1>
+<button onclick="location.href='{% url 'cart' %}'">Return to Order Details</button>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Your Wishlist</h1>
+
+<div class="wishlist-items">
+    {% for item in items %}
+    <div class="wishlist-item">
+        <!-- Access product name through item.product_id -->
+        <p>{{ item.product_id.name }}</p>
+        <form action="{% url 'remove_from_wishlist' item.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Remove</button>
+        </form>
+    </div>
+    {% empty %}
+    <p>Your wishlist is empty.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

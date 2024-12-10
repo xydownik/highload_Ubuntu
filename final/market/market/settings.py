@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'debug_toolbar',
-    'django_prometheus'
+    'django_prometheus',
+    'frontend',
+    'channels',
+    'django_celery_results',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -146,13 +150,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-LOGIN_REDIRECT_URL = '/api/users/'
+LOGIN_REDIRECT_URL = '/market/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -186,6 +191,12 @@ from pythonjsonlogger import jsonlogger
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+}
 
 LOGGING = {
     'version': 1,
@@ -239,4 +250,10 @@ LOGGING = {
     },
 }
 
+CELERY_BROKER_URL = 'amqp://localhost'  # RabbitMQ broker URL
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
+# Celery Results Backend (optional)
+CELERY_RESULT_BACKEND = 'django-db'
+ASGI_APPLICATION = 'market.asgi.application'

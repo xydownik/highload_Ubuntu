@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Your Orders</h1>
+<div class="order-list">
+    {% for order in orders %}
+    <div class="order">
+        <p>Order #{{ order.id }} - ${{ order.total_amount }}</p>
+        <p>Status: {{ order.order_status }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
