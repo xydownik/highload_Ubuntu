@@ -69,3 +69,33 @@ class WishlistItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishlistItem
         fields = ['id', 'wishlist_id', 'product_id', 'created_at']
+
+
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+
+User = get_user_model()
+
+# User Serializer for Registration
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
+# Serializer for Login
+from django.contrib.auth import authenticate
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        user = authenticate(email=data['email'], password=data['password'])
+        if user is None:
+            raise serializers.ValidationError("Invalid credentials.")
+        return {'user': user}

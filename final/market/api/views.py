@@ -2,6 +2,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.shortcuts import redirect, render, get_object_or_404
+from django_ratelimit.decorators import ratelimit
+from rest_framework import permissions, status
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -10,6 +13,8 @@ from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from payments.forms import  PaymentForm
 from payments.models import Payment
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .forms import CustomUserCreationForm
 from .serializers import *
 
@@ -123,3 +128,34 @@ def register(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+@ratelimit(key='ip', rate='5/m', method='ALL')
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def register_user(request):
+    if request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            # Send response
+            return Response({
+                "message": "User registered successfully.",
+                "user": UserSerializer(user).data
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Login view
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def login_user(request):
+    if request.method == 'POST':
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validated_data['user']
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

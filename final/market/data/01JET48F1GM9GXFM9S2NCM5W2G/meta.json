@@ -1,0 +1,17 @@
+{
+	"ulid": "01JET48F1GM9GXFM9S2NCM5W2G",
+	"minTime": 1733472000000,
+	"maxTime": 1733479200000,
+	"stats": {
+		"numSamples": 589576,
+		"numSeries": 1084,
+		"numChunks": 5196
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01JET48F1GM9GXFM9S2NCM5W2G"
+		]
+	},
+	"version": 1
+}

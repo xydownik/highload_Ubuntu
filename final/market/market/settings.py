@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
+    'rest_framework_simplejwt',
     'debug_toolbar',
     'django_prometheus',
     'frontend',
@@ -185,7 +186,12 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
 }
+
 
 CACHES = {
     'default': {
@@ -272,3 +278,6 @@ CELERY_RESULT_BACKEND = 'django-db'
 ASGI_APPLICATION = 'market.asgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
