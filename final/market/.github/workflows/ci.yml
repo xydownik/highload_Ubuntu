@@ -1,0 +1,47 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Triggers for pushes to main branch
+  pull_request:
+    branches:
+      - main  # Triggers for PRs to main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Build Docker image
+        run: |
+          docker-compose build
+
+      - name: Run tests
+        run: |
+          pytest --cov=.
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to Staging
+        run: |
+          bash deployment/deploy_staging.sh
+        if: github.ref == 'refs/heads/main'
+
+      - name: Deploy to Production
+        run: |
+          bash deployment/deploy_production.sh
+        if: github.ref == 'refs/tags/*'
