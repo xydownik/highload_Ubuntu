@@ -1,9 +1,11 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from django.shortcuts import redirect, render, get_object_or_404
+from django.db import connections
+from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_protect
 from django_ratelimit.decorators import ratelimit
-from rest_framework import permissions, status
+from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
@@ -11,7 +13,6 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
-from payments.forms import  PaymentForm
 from payments.models import Payment
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -31,7 +32,7 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
 
 # @method_decorator(cache_page(CACHE_TIMEOUT), name='dispatch')
-class ProductViewSet(ModelViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.select_related('category_id')
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
@@ -69,13 +70,13 @@ class ProductViewSet(ModelViewSet):
         return Response(response_data)
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name='dispatch')
-class OrderViewSet(ModelViewSet):
+class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.select_related('user_id')
     serializer_class = OrderSerializer
     # permission_classes = [IsAuthenticated]
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name='dispatch')
-class OrderItemViewSet(ModelViewSet):
+class OrderItemViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.select_related('order_id', 'product_id')
     serializer_class = OrderItemSerializer
     permission_classes = [IsAuthenticated]
@@ -99,6 +100,7 @@ class PaymentViewSet(ModelViewSet):
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.select_related('product_id', 'user_id')
     serializer_class = ReviewSerializer
+
 
 @method_decorator(cache_page(CACHE_TIMEOUT), name='dispatch')
 class WishlistViewSet(ModelViewSet):

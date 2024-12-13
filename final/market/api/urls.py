@@ -18,5 +18,4 @@ urlpatterns = router.urls
 urlpatterns += [
     path('auth/register/', register_user, name='register'),
     path('auth/login/', login_user, name='login'),
-    path('auth/login/', login_user, name='login'),
 ]

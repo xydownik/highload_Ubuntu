@@ -15,14 +15,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install cassandra-driver
 
 # Copy requirements file and install Python dependencies
-COPY requirements.txt .
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy wait-for-it.sh script
+COPY scripts/wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
 
 # Copy application code
 COPY . .
 
 # Expose ports for Gunicorn and Cassandra
-EXPOSE 8000 8001 8002 8003 9042
+EXPOSE 8000 8001 8002 8003
 
 # Set Gunicorn as the default command
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "myapp.wsgi:application"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "market.wsgi:application"]

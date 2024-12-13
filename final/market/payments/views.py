@@ -4,6 +4,8 @@ import uuid
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from api.models import Order, OrderItem, Product
+from django.views.decorators.cache import cache_page
+
 from .forms import PaymentForm
 from .models import Payment
 from .tasks import process_payment, send_order_confirmation_email
@@ -53,7 +55,9 @@ def pay_order(request, order_id):
                 amount=order.total_amount,
                 status="Pending"
             )
+
             payment.save()
+            order.status = "Completed"
             # Запуск фоновых задач для обработки платежа и отправки письма
             process_payment.delay(payment.id)
             send_order_confirmation_email.delay(order.id)

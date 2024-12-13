@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_prometheus.middleware.PrometheusAfterMiddleware',
+    'market.middleware.SecureHeadersMiddleware'
 ]
 if DEBUG:
     INTERNAL_IPS = ['127.0.0.1']
@@ -101,7 +102,7 @@ DATABASES = {
     'cassandra': {
         'ENGINE': 'django_cassandra_engine',
         'NAME': 'my_keyspace',
-        'HOST': '127.0.0.1',
+        'HOST': 'cassandra',
         'PORT': 9042,
         'OPTIONS': {
             'replication_factor': 3,
@@ -113,23 +114,15 @@ DATABASES = {
         'NAME': 'new_db',
         'USER': 'admin',
         'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
-    'replica1': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'new_db',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
+        'HOST': 'postgres',
         'PORT': '5432',
     },
     'replica2': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'new_db',
+        'NAME': 'db_replica2',
         'USER': 'admin',
         'PASSWORD': 'admin',
-        'HOST': 'localhost',
+        'HOST': 'postgres',
         'PORT': '5432',
     }
 }
@@ -153,6 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+DATABASE_ROUTERS = ['market.db_router.PrimaryReplicaRouter']
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -173,12 +167,15 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'static')]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'api.CustomUser'
+
 
 
 REST_FRAMEWORK = {
@@ -281,3 +278,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
+
+# CASSANDRA_CONNECTION = {
+#     'default': {
+#         'ENGINE': 'django_cassandra_engine',
+#         'NAME': 'my_keyspace',
+#         'HOST': '127.0.0.1',
+#         'PORT': '9042',
+#          'OPTIONS': {
+#             'replication_factor': 3,
+#             'consistency_level': 'LOCAL_QUORUM',
+#         }
+#     }
+# }
